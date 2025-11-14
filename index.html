@@ -1,187 +1,220 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Melati Bakery | Kue, Roti & Donat</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      background-color: #fff8e1; /* kuning lembut */
-      color: #333;
-    }
-
-    header {
-      background: linear-gradient(90deg, #ffca28, #ff7043);
-      color: white;
-      text-align: center;
-      padding: 30px 10px;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2em;
-      font-weight: 700;
-    }
-
-    header p {
-      font-size: 1.1em;
-      margin-top: 5px;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-    }
-
-    .card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-
-    .card-content {
-      padding: 15px;
-      text-align: center;
-    }
-
-    .card-content h3 {
-      color: #e53935;
-      margin-bottom: 5px;
-    }
-
-    .card-content p {
-      font-size: 0.95em;
-      margin-bottom: 10px;
-    }
-
-    .price {
-      font-weight: bold;
-      color: #d32f2f;
-      margin-bottom: 15px;
-      display: block;
-    }
-
-    .btn {
-      background-color: #ffca28;
-      color: #333;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-block;
-      transition: 0.2s;
-    }
-
-    .btn:hover {
-      background-color: #ffb300;
-      color: white;
-    }
-
-    footer {
-      background: #ffeb3b;
-      text-align: center;
-      padding: 20px;
-      color: #333;
-      margin-top: 40px;
-    }
-
-    footer p {
-      margin: 5px;
-    }
-
-    footer a {
-      color: #e53935;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    @media (max-width: 600px) {
-      header h1 { font-size: 1.5em; }
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Daftar Tanah & Properti — MU Property Land</title>
+<style>
+  :root{
+    --bg:#0b0b0b; --card:#111; --muted:#b3b7bb; --gold:#d6b43c; --white:#ffffff;
+    --maxw:1100px;
+  }
+  html,body{margin:0;padding:0;font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:linear-gradient(180deg,#020202,#0f0f0f);color:var(--white);}
+  .site{max-width:var(--maxw);margin:24px auto;padding:20px;}
+  /* header */
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{width:62px;height:auto;border-radius:10px}
+  .brand .title{font-weight:800;font-size:18px}
+  .brand .tag{color:var(--gold);font-size:13px;margin-top:3px}
+  .top-actions{display:flex;gap:10px;align-items:center}
+  .btn-gold{background:var(--gold);color:#111;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700}
+  .btn-light{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:9px 12px;border-radius:10px;color:var(--white);text-decoration:none}
+  /* search/filter */
+  .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:18px 0}
+  .controls input[type="search"], .controls select{background:#0f0f0f;border:1px solid rgba(255,255,255,0.06);padding:10px 12px;border-radius:10px;color:var(--white);min-width:180px}
+  /* grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+  .card{background:linear-gradient(180deg,#0f1112,#0b0b0b);border:1px solid rgba(255,255,255,0.04);border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.6);transform:translateY(0);transition:transform .28s,box-shadow .28s;opacity:0;transform:translateY(18px)}
+  .card.visible{opacity:1;transform:translateY(0)}
+  .card img{width:100%;height:180px;object-fit:cover;display:block}
+  .card-body{padding:14px;display:flex;flex-direction:column;gap:8px}
+  .tag{color:var(--gold);font-weight:700;font-size:13px}
+  h3{margin:0;font-size:18px}
+  .meta{color:var(--muted);font-size:13px}
+  .row{display:flex;justify-content:space-between;align-items:center}
+  .price{color:var(--gold);font-weight:800}
+  .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:var(--white);text-decoration:none}
+  /* pagination */
+  .pagination{display:flex;gap:8px;justify-content:center;margin:28px 0}
+  .pagination button{background:#111;border:1px solid rgba(255,255,255,0.04);color:var(--white);padding:8px 12px;border-radius:8px;cursor:pointer}
+  .pagination button.active{background:var(--gold);color:#111;border-color:var(--gold)}
+  /* footer */
+  footer{margin-top:40px;padding:30px 0;text-align:center;color:var(--muted);position:relative}
+  footer::before{content:"";display:block;width:60px;height:4px;background:var(--gold);margin:0 auto 12px;border-radius:4px}
+  /* floating nav (right) */
+  .float-nav{position:fixed;right:18px;bottom:18px;display:flex;flex-direction:column;gap:10px;z-index:999}
+  .float-btn{width:56px;height:56px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;background:#0b0b0b;border:1px solid rgba(255,255,255,0.06);color:var(--white);text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+  .float-btn.gold{background:var(--gold);color:#111;border-color:var(--gold)}
+  /* dark toggle */
+  .toggle {background:#0f0f0f;border-radius:999px;padding:6px;display:inline-flex;gap:6px;align-items:center}
+  .toggle input{display:none}
+  .mode-label{font-size:13px;color:var(--muted);margin-left:8px}
+  /* responsive */
+  @media(max-width:640px){ .controls{flex-direction:column;align-items:stretch} .brand .title{font-size:16px} }
+</style>
 </head>
 <body>
 
+<div class="site">
+
+  <!-- HEADER -->
   <header>
-    <h1>🌸 Melati Bakery</h1>
-    <p>Kue, Roti & Donat Segar Setiap Hari</p>
+    <div class="brand">
+      <img src="sayaka.png" alt="MU logo">
+      <div>
+        <div class="title">MU Property Land</div>
+        <div class="tag">Solusi Tanah & Properti Terpercaya</div>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <a class="btn-light" href="https://mu-property-land.berdu.pw/" title="Kembali ke Homepage">🏠 Home</a>
+      <a class="btn-gold" href="https://wa.me/6281229942538" target="_blank">📞 Hubungi (081229942538)</a>
+      <div class="toggle" title="Toggle Dark/Light" id="modeToggle" style="cursor:pointer;padding:6px 10px;border:1px solid rgba(255,255,255,0.04);">
+        <span style="font-weight:700">Mode</span>
+        <span class="mode-label" id="modeLabel">Gelap</span>
+      </div>
+    </div>
   </header>
 
-  <div class="container">
-    <div class="card-grid">
-
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b" alt="Roti Coklat">
-        <div class="card-content">
-          <h3>Roti Coklat</h3>
-          <p>Roti lembut isi coklat premium, manis dan legit.</p>
-          <span class="price">Rp 8.000</span>
-          <a class="btn" href="https://wa.me/0123456789?text=Halo%20Melati%20Bakery%2C%20saya%20ingin%20pesan%20Roti%20Coklat" target="_blank">Pesan Sekarang</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587" alt="Donat Gula">
-        <div class="card-content">
-          <h3>Donat Gula</h3>
-          <p>Donat lembut tabur gula halus, cocok untuk semua suasana.</p>
-          <span class="price">Rp 6.000</span>
-          <a class="btn" href="https://wa.me/0123456789?text=Halo%20Melati%20Bakery%2C%20saya%20ingin%20pesan%20Donat%20Gula" target="_blank">Pesan Sekarang</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1601972599720-36938d4ecd29" alt="Kue Tart Mini">
-        <div class="card-content">
-          <h3>Kue Tart Mini</h3>
-          <p>Kue tart kecil dengan krim lembut, cocok untuk hadiah manis.</p>
-          <span class="price">Rp 25.000</span>
-          <a class="btn" href="https://wa.me/0123456789?text=Halo%20Melati%20Bakery%2C%20saya%20ingin%20pesan%20Kue%20Tart%20Mini" target="_blank">Pesan Sekarang</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1590080875832-2c1b7c8c15df" alt="Roti Keju">
-        <div class="card-content">
-          <h3>Roti Keju</h3>
-          <p>Roti lembut dengan parutan keju meleleh di atasnya.</p>
-          <span class="price">Rp 9.000</span>
-          <a class="btn" href="https://wa.me/0123456789?text=Halo%20Melati%20Bakery%2C%20saya%20ingin%20pesan%20Roti%20Keju" target="_blank">Pesan Sekarang</a>
-        </div>
-      </div>
-
+  <!-- Controls -->
+  <div style="margin-top:12px">
+    <div class="controls">
+      <input id="searchBox" type="search" placeholder="Cari (lokasi, nama, tipe)..." aria-label="search" />
+      <select id="filterLokasi"><option value="">Semua Lokasi</option><option>Sofifi</option><option>Desa Fitu</option><option>Kelurahan Sasa</option><option>Akelamo Kepulauan</option><option>Ternate Selatan</option><option>Tobelo</option></select>
+      <select id="filterTipe"><option value="">Semua Tipe</option><option>Tanah</option><option>Rumah</option></select>
+      <select id="perPage"><option value="4">4 per halaman</option><option value="6" selected>6 per halaman</option><option value="8">8 per halaman</option></select>
     </div>
   </div>
 
+  <!-- Grid -->
+  <div class="grid" id="grid"></div>
+
+  <!-- Pagination -->
+  <div class="pagination" id="pagination"></div>
+
+  <!-- Footer -->
   <footer>
-    <p><strong>Alamat:</strong> Jl. Mawar Indah No. 15, Kota Ternate</p>
-    <p><strong>Kontak:</strong> 📞 <a href="https://wa.me/0123456789" target="_blank">0123456789</a></p>
-    <p>© 2025 Melati Bakery — Semua Hak Dilindungi</p>
+    MU Property Land — Solusi Tanah dan Properti Terpercaya &middot; WA: 081229942538
   </footer>
 
+</div>
+
+<!-- Floating Nav (Home + WhatsApp) -->
+<div class="float-nav" aria-hidden="false">
+  <a class="float-btn" href="https://mu-property-land.berdu.pw/" title="Kembali ke Homepage">🏠</a>
+  <a class="float-btn gold" href="https://wa.me/6281229942538" target="_blank" title="Hubungi via WhatsApp">💬</a>
+</div>
+
+<script>
+/* Data listing (dummy) */
+const properties = [
+  {id:1,title:"Tanah Sofifi",type:"Tanah",lokasi:"Sofifi",luas:"1200 m²",sert:"SHM Elektronik",harga:"Rp 200.000.000",img:"tanah.png",desc:"Tanah strategis, cocok hunian atau investasi."},
+  {id:2,title:"Tanah Desa Fitu",type:"Tanah",lokasi:"Desa Fitu",luas:"800 m²",sert:"Sporadik",harga:"Rp 95.000.000",img:"tanah1.png",desc:"Akses jalan mobil, lingkungan tenang."},
+  {id:3,title:"Tanah Akelamo",type:"Tanah",lokasi:"Akelamo Kepulauan",luas:"2500 m²",sert:"SKPT",harga:"Rp 350.000.000",img:"tanah2.png",desc:"Potensi untuk kebun atau investasi jangka panjang."},
+  {id:4,title:"Tanah Sasa",type:"Tanah",lokasi:"Kelurahan Sasa",luas:"600 m²",sert:"SHM",harga:"Rp 180.000.000",img:"tanah3.png",desc:"Lokasi berkembang, potensi kenaikan nilai."},
+  {id:5,title:"Rumah Minimalis",type:"Rumah",lokasi:"Ternate Selatan",luas:"72 m²",sert:"SHM",harga:"Rp 450.000.000",img:"rumah.png",desc:"Rumah siap huni, lingkungan aman."},
+  {id:6,title:"Rumah Cluster Elite",type:"Rumah",lokasi:"Tobelo",luas:"150 m²",sert:"SHM",harga:"Rp 600.000.000",img:"rumah1.png",desc:"Cluster modern, keamanan 24 jam."}
+];
+
+/* state */
+let state = {page:1, perPage:6, filterLok:"", filterType:"", query:""};
+
+/* DOM refs */
+const grid = document.getElementById('grid');
+const pagination = document.getElementById('pagination');
+const filterLokasi = document.getElementById('filterLokasi');
+const filterTipe = document.getElementById('filterTipe');
+const searchBox = document.getElementById('searchBox');
+const perPage = document.getElementById('perPage');
+
+/* render */
+function filterData(){
+  const q = state.query.trim().toLowerCase();
+  return properties.filter(p=>{
+    if(state.filterLok && state.filterLok !== "" && p.lokasi.toLowerCase().indexOf(state.filterLok.toLowerCase())===-1) return false;
+    if(state.filterType && state.filterType !== "" && p.type.toLowerCase() !== state.filterType.toLowerCase()) return false;
+    if(q){
+      return (p.title.toLowerCase().includes(q) || p.lokasi.toLowerCase().includes(q) || p.type.toLowerCase().includes(q));
+    }
+    return true;
+  });
+}
+function render(){
+  const data = filterData();
+  const total = data.length;
+  const per = state.perPage;
+  const pages = Math.max(1, Math.ceil(total/per));
+  if(state.page>pages) state.page = pages;
+  const start = (state.page-1)*per;
+  const pageItems = data.slice(start,start+per);
+
+  grid.innerHTML = pageItems.map(p=>`
+    <article class="card" data-id="${p.id}">
+      <img src="${p.img}" alt="${p.title}">
+      <div class="card-body">
+        <div class="tag">${p.lokasi}</div>
+        <h3>${p.title}</h3>
+        <div class="meta">${p.luas} • ${p.sert}</div>
+        <div class="row"><div class="price">${p.harga}</div></div>
+        <div class="btns">
+          <a class="btn-outline" href="detail${p.id}.html">Lihat Detail</a>
+          <a class="btn-gold" href="https://wa.me/6281229942538?text=${encodeURIComponent('Halo MU Property Land, saya mau info '+p.title)}" target="_blank">Hubungi</a>
+        </div>
+      </div>
+    </article>`).join('');
+
+  // cards reveal animation
+  setTimeout(()=>{document.querySelectorAll('.card').forEach((c,i)=>setTimeout(()=>c.classList.add('visible'), i*80))},80);
+
+  // pagination
+  pagination.innerHTML = '';
+  for(let i=1;i<=pages;i++){
+    const btn = document.createElement('button');
+    btn.textContent = i;
+    if(i===state.page) btn.classList.add('active');
+    btn.onclick = ()=>{ state.page=i; render(); window.scrollTo({top:0,behavior:'smooth'}) };
+    pagination.appendChild(btn);
+  }
+  if(pages>1){
+    const next = document.createElement('button'); next.textContent='Next'; next.onclick=()=>{ if(state.page<pages){state.page++;render();} };
+    pagination.appendChild(next);
+  }
+}
+
+/* events */
+filterLokasi.onchange = ()=>{ state.filterLok = filterLokasi.value; state.page=1; render();}
+filterTipe.onchange = ()=>{ state.filterType = filterTipe.value; state.page=1; render();}
+searchBox.oninput = ()=>{ state.query = searchBox.value; state.page=1; render();}
+perPage.onchange = ()=>{ state.perPage = parseInt(perPage.value,10); state.page=1; render(); }
+
+/* initial */
+render();
+
+/* dark mode manual toggle (B: manual only) */
+const modeToggle = document.getElementById('modeToggle'), modeLabel = document.getElementById('modeLabel');
+let dark = true;
+modeToggle.addEventListener('click', ()=>{
+  dark = !dark;
+  if(!dark){
+    document.documentElement.style.background = '#ffffff';
+    document.body.style.background = '#ffffff';
+    document.body.style.color = '#111';
+    modeLabel.textContent = 'Terang';
+  } else {
+    document.documentElement.style.background = 'linear-gradient(180deg,#020202,#0f0f0f)';
+    document.body.style.background = 'linear-gradient(180deg,#020202,#0f0f0f)';
+    document.body.style.color = '#fff';
+    modeLabel.textContent = 'Gelap';
+  }
+});
+
+/* ensure floating nav visible on small screens (no-op) */
+
+/* accessibility: keyboard support for pagination (optional) */
+
+</script>
 </body>
 </html>
